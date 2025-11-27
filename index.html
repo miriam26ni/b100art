@@ -219,31 +219,5 @@
     </div>
     <p style="margin-top:60px; opacity:0.6;">© 2025 B100Art • All rights reserved</p>
   </footer>
-
-  <!-- SUPABASE (protección de página) -->
-  <script type="module">
-    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
-
-    const supabaseUrl = 'https://akccnxfcldeydrewlcff.supabase.co'
-    const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFrY2NueGZjbGRleWRyZXdsY2ZmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc2MTcyMTYsImV4cCI6MjA3MzE5MzIxNn0.dSjJG8oFfvngq_Skr03yXXus2ej8CRT6l25mBRsk3gY'
-
-    const supabase = createClient(supabaseUrl, supabaseAnonKey)
-
-    // Si no hay sesión confirmada → te manda al login
-    const checkSession = async () => {
-      const { data: { session } } = await supabase.auth.getSession()
-      if (!session || !session.user.email_confirmed_at) {
-        window.location.href = 'https://b100art.digital/login.html'
-      }
-    }
-    checkSession()
-
-    // Si en cualquier momento se cierra sesión → también te saca
-    supabase.auth.onAuthStateChange((event, session) => {
-      if (!session || event === 'SIGNED_OUT') {
-        window.location.href = 'https://b100art.digital/login.html'
-      }
-    })
-  </script>
 </body>
 </html>
