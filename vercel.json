@@ -1,0 +1,10 @@
+{
+  "rewrites": [
+    { "source": "/bateria",      "destination": "https://jkiwfvolipgttkyxcndc.functions.supabase.co/functions/v1/bateria" },
+    { "source": "/bateria/:path*", "destination": "https://jkiwfvolipgttkyxcndc.functions.supabase.co/functions/v1/bateria/:path*" },
+    { "source": "/pagar",        "destination": "https://jkiwfvolipgttkyxcndc.functions.supabase.co/functions/v1/pagar" },
+    { "source": "/pagar/:path*",   "destination": "https://jkiwfvolipgttkyxcndc.functions.supabase.co/functions/v1/pagar/:path*" },
+    { "source": "/panel",        "destination": "https://jkiwfvolipgttkyxcndc.functions.supabase.co/functions/v1/panel" },
+    { "source": "/panel/:path*",   "destination": "https://jkiwfvolipgttkyxcndc.functions.supabase.co/functions/v1/panel/:path*" }
+  ]
+}
