@@ -1,0 +1,6 @@
+{
+  "name": "b100art-dev",
+  "image": "mcr.microsoft.com/devcontainers/javascript-node:0-18",
+  "features": {},
+  "postCreateCommand": "curl -fsSL https://supabase.com/install.sh | bash && echo 'export PATH=\"$HOME/.supabase/bin:$PATH\"' >> ~/.bashrc"
+}
