@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pago Exitoso</title>
+  <link href="https://cdn.tailwindcss.com" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      background: radial-gradient(circle at center, #0a0f1e 0%, #000 100%);
+      color: white;
+      font-family: system-ui, sans-serif;
+    }
+
+    canvas {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      z-index: -1;
+    }
+
+    .btn-modern {
+      padding: 14px 32px;
+      border-radius: 40px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      display: inline-block;
+      transition: 0.25s ease;
+      cursor: pointer;
+    }
+
+    .btn-download {
+      background: linear-gradient(135deg, #22c55e, #16a34a);
+      box-shadow: 0 0 20px rgba(34, 197, 94, 0.4);
+    }
+    .btn-download:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 0 25px rgba(34, 197, 94, 0.6);
+    }
+
+    .btn-panel {
+      background: linear-gradient(135deg, #3b82f6, #2563eb);
+      box-shadow: 0 0 20px rgba(59, 130, 246, 0.4);
+    }
+    .btn-panel:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 0 25px rgba(59, 130, 246, 0.6);
+    }
+
+    .glass {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(12px);
+      border-radius: 20px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <canvas id="particles"></canvas>
+
+  <div class="min-h-screen flex items-center justify-center p-6">
+    <div class="glass p-10 max-w-md w-full text-center shadow-xl">
+
+      <h1 class="text-3xl font-bold mb-4 text-green-400">¡Pago completado!</h1>
+
+      <p class="opacity-80 mb-8">
+        Gracias por tu compra. Tu archivo ya está disponible para descargar.
+      </p>
+
+      <!-- BOTÓN DESCARGA -->
+      <a id="downloadBtn"
+         class="btn-modern btn-download mb-4 block">
+         Descargar Imagen
+      </a>
+
+      <!-- BOTÓN PANEL -->
+      <a href="/panel.html"
+         class="btn-modern btn-panel block">
+         Volver al Panel
+      </a>
+
+    </div>
+  </div>
+
+  <script>
+    /* =============================
+       DESCARGAR IMAGEN REAL
+    ============================== */
+    const item = JSON.parse(localStorage.getItem("checkoutItem"));
+    const downloadBtn = document.getElementById("downloadBtn");
+
+    if (item && item.imageUrl) {
+      downloadBtn.href = item.imageUrl;
+      downloadBtn.download = `${item.title.replace(/\s+/g, "_")}.jpg`;
+    } else {
+      downloadBtn.href = "#";
+      downloadBtn.textContent = "No se encontró la imagen para descargar";
+      downloadBtn.style.opacity = "0.4";
+      downloadBtn.style.pointerEvents = "none";
+    }
+
+    /* =============================
+       ANIMACIÓN DE PARTÍCULAS
+    ============================== */
+    const canvas = document.getElementById('particles');
+    const ctx = canvas.getContext('2d');
+
+    canvas.width = innerWidth;
+    canvas.height = innerHeight;
+
+    const particles = [];
+    for (let i = 0; i < 120; i++) {
+      particles.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        size: Math.random() * 2 + 0.5,
+        speedX: (Math.random() - 0.5) * 0.3,
+        speedY: (Math.random() - 0.5) * 0.3
+      });
+    }
+
+    function animateParticles() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = "rgba(255,255,255,0.7)";
+      particles.forEach(p => {
+        p.x += p.speedX;
+        p.y += p.speedY;
+        if (p.x < 0 || p.x > canvas.width) p.speedX *= -1;
+        if (p.y < 0 || p.y > canvas.height) p.speedY *= -1;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.fill();
+      });
+      requestAnimationFrame(animateParticles);
+    }
+
+    animateParticles();
+
+    window.addEventListener("resize", () => {
+      canvas.width = innerWidth;
+      canvas.height = innerHeight;
+    });
+  </script>
+
+</body>
+</html>
+
