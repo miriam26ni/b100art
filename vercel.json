@@ -1,5 +1,21 @@
 {
   "rewrites": [
+    {
+      "source": "/registro/:path*", 
+      "destination": "https://vfnouwdawgkrtexudfkj.functions.supabase.co/registro/:path*"
+    },
+    {
+      "source": "/register",
+      "destination": "https://vfnouwdawgkrtexudfkj.functions.supabase.co/registro"
+    },
+    {
+      "source": "/login/:path*", 
+      "destination": "https://vfnouwdawgkrtexudfkj.functions.supabase.co/login/:path*"
+    },
+    {
+      "source": "/login",
+      "destination": "https://vfnouwdawgkrtexudfkj.functions.supabase.co/login"
+    },
     { "source": "/bateria",      "destination": "https://jkiwfvolipgttkyxcndc.functions.supabase.co/functions/v1/bateria" },
     { "source": "/bateria/:path*", "destination": "https://jkiwfvolipgttkyxcndc.functions.supabase.co/functions/v1/bateria/:path*" },
     { "source": "/pagar",        "destination": "https://jkiwfvolipgttkyxcndc.functions.supabase.co/functions/v1/pagar" },
