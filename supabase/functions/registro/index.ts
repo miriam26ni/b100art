@@ -1,10 +1,10 @@
 import { serve } from "https://deno.land/std@0.224.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
-// Cliente ANON (seguro para HTML público)
+// Cliente ANON (directo en código, NO recomendado para producción)
 const supabase = createClient(
-  Deno.env.get("SUPABASE_URL")!,
-  Deno.env.get("SUPABASE_ANON_KEY")!
+  "https://vfnouwdawgkrtexudfkj.supabase.co",
+  "TU_ANON_KEY_AQUI"
 );
 
 // ================================
@@ -97,7 +97,7 @@ const REGISTER_HTML = `<!DOCTYPE html>
 
     const supabase = createClient(
       "https://vfnouwdawgkrtexudfkj.supabase.co",
-      "YOUR_ANON_KEY_AQUI"
+      "TU_ANON_KEY_AQUI"
     );
 
     const paises = [
@@ -155,7 +155,7 @@ const REGISTER_HTML = `<!DOCTYPE html>
       });
 
       if (error) {
-        msg.innerHTML = \`<span class="error">\${error.message}</span>\`;
+        msg.innerHTML = '<span class="error">' + error.message + '</span>';
         btn.disabled = false;
         btnText.classList.remove('hidden');
         loader.classList.add('hidden');
@@ -172,9 +172,9 @@ const REGISTER_HTML = `<!DOCTYPE html>
         }, { onConflict: 'id' });
 
       if (dbError) {
-        msg.innerHTML = \`<span class="error">Cuenta creada pero error al guardar datos extra.</span>\`;
+        msg.innerHTML = '<span class="error">Cuenta creada pero error al guardar datos extra.</span>';
       } else {
-        msg.innerHTML = \`<span class="success">¡Cuenta creada! Revisa tu correo.</span>\`;
+        msg.innerHTML = '<span class="success">¡Cuenta creada! Revisa tu correo.</span>';
       }
 
       btn.disabled = false;
@@ -184,10 +184,10 @@ const REGISTER_HTML = `<!DOCTYPE html>
   </script>
 </body>
 </html>`;
-    
-// ===============
+
+// ================================
 // SERVIDOR
-// ===============
+// ================================
 serve(async (req) => {
   return new Response(REGISTER_HTML, {
     headers: { "Content-Type": "text/html; charset=utf-8" }
