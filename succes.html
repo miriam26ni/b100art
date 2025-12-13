@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pago Exitoso • B100Art</title>
+  <link href="https://cdn.tailwindcss.com" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      background: radial-gradient(circle at center, #0a0f1e 0%, #000 100%);
+      color: white;
+      font-family: system-ui, sans-serif;
+    }
+
+    canvas {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+    }
+
+    .glass {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(12px);
+      border-radius: 20px;
+    }
+
+    .btn-modern {
+      padding: 14px 32px;
+      border-radius: 40px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      display: inline-block;
+      transition: 0.25s ease;
+      cursor: pointer;
+      text-align: center;
+    }
+
+    .btn-download {
+      background: linear-gradient(135deg, #22c55e, #16a34a);
+      box-shadow: 0 0 20px rgba(34, 197, 94, 0.4);
+    }
+    .btn-download:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 0 25px rgba(34, 197, 94, 0.6);
+    }
+
+    .btn-panel {
+      background: linear-gradient(135deg, #3b82f6, #2563eb);
+      box-shadow: 0 0 20px rgba(59, 130, 246, 0.4);
+    }
+    .btn-panel:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 0 25px rgba(59, 130, 246, 0.6);
+    }
+  </style>
+</head>
+
+<body>
+
+<canvas id="particles"></canvas>
+
+<div class="min-h-screen flex items-center justify-center p-6">
+  <div class="glass p-10 max-w-md w-full text-center shadow-xl">
+
+    <h1 class="text-3xl font-bold mb-4 text-green-400">
+      ¡Pago completado!
+    </h1>
+
+    <p class="opacity-80 mb-8">
+      Gracias por tu compra. Tu archivo está listo para descargar.
+    </p>
+
+    <!-- BOTÓN DESCARGA -->
+    <a id="downloadBtn" class="btn-modern btn-download mb-4 block">
+      Descargar Imagen
+    </a>
+
+    <!-- VOLVER A HOME -->
+    <a href="/index.html" class="btn-modern btn-panel block">
+      Volver a la Página principal
+    </a>
+
+  </div>
+</div>
+
+<script>
+/* ===============================
+   DESCARGA GARANTIZADA
+================================ */
+const title = localStorage.getItem("selected_art_title");
+const file = localStorage.getItem("selected_art_file");
+const downloadBtn = document.getElementById("downloadBtn");
+
+// CAMBIA ESTA RUTA SI QUIERES
+const IMAGE_BASE_PATH = "/downloads/";
+
+if (title && file) {
+  downloadBtn.href = IMAGE_BASE_PATH + file;
+  downloadBtn.download = file;
+} else {
+  downloadBtn.textContent = "No se encontró el archivo";
+  downloadBtn.style.opacity = "0.4";
+  downloadBtn.style.pointerEvents = "none";
+}
+
+/* ===============================
+   PARTÍCULAS
+================================ */
+const canvas = document.getElementById("particles");
+const ctx = canvas.getContext("2d");
+
+function resize() {
+  canvas.width = innerWidth;
+  canvas.height = innerHeight;
+}
+resize();
+
+const particles = Array.from({ length: 120 }, () => ({
+  x: Math.random() * canvas.width,
+  y: Math.random() * canvas.height,
+  r: Math.random() * 2 + 0.5,
+  vx: (Math.random() - 0.5) * 0.3,
+  vy: (Math.random() - 0.5) * 0.3
+}));
+
+function animate() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.fillStyle = "rgba(255,255,255,0.7)";
+  particles.forEach(p => {
+    p.x += p.vx;
+    p.y += p.vy;
+    if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+    if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+    ctx.fill();
+  });
+  requestAnimationFrame(animate);
+}
+animate();
+
+window.addEventListener("resize", resize);
+</script>
+
+</body>
+</html>
